@@ -1,0 +1,10 @@
+#!/bin/sh
+
+FILE="/mosquitto/config/passwd"
+test -f "${FILE}" || touch "${FILE}"
+if [ "$1" == "-b" ]; then
+    shift
+    mosquitto_passwd -b "${FILE}" "$@"
+else
+    mosquitto_passwd "${FILE}" "$@"
+fi

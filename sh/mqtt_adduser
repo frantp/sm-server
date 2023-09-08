@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ROOT="$(dirname "$(dirname "$0")")"
+docker run --rm -it -v "${ROOT}/etc/mosquitto:/mosquitto/config" eclipse-mosquitto:2 sh /mosquitto/config/mqtt_passwd "$@"
