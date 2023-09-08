@@ -1,0 +1,20 @@
+#!/bin/bash
+
+gen_password() {
+    head -c $1 /dev/urandom | base64 -w 0
+}
+
+read -ep "Storage path: " INFLUXDB_PATH
+read -p  "Username:     " INFLUXDB_USERNAME
+read -sp "Password:     " INFLUXDB_PASSWORD && echo ""
+read -p  "Organization: " INFLUXDB_ORG
+read -p  "Bucket:       " INFLUXDB_BUCKET
+
+echo "INFLUXDB_PATH=${INFLUXDB_PATH}" > .env
+echo "INFLUXDB_USERNAME=${INFLUXDB_USERNAME}" >> .env
+echo "INFLUXDB_PASSWORD=${INFLUXDB_PASSWORD}" >> .env
+echo "INFLUXDB_ORG=${INFLUXDB_ORG}" >> .env
+echo "INFLUXDB_BUCKET=${INFLUXDB_BUCKET}" >> .env
+echo "INFLUXDB_ADMIN_TOKEN=$(gen_password 64)" >> .env
+echo "TELEGRAF_USERNAME=telegraf" >> .env
+echo "TELEGRAF_PASSWORD=$(gen_password 12)" >> .env
